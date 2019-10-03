@@ -30,7 +30,7 @@ def buildmatrix(l, c, n):
     return M
 
 Matr = buildmatrix(10, 10, 'V')
-printmatrix(M)
+printmatrix(Matr)
 
 
 def loadmatrix(filename):

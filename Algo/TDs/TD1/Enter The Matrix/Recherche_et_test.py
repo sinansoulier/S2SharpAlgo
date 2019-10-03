@@ -93,10 +93,10 @@ def searchMatrix(M, e):
 """# Exercice 2.4 (Symétrique)"""
 # Ecrire la fonction qui teste si une matrice carrée non vide est symmétrique
 def _are_list_equals(L1, L2):
-    i = 0
-    while i < l1 and L1[i] == L2[i]:
+    l, i = 0, len(L1)
+    while i < l and L1[i] == L2[i]:
         i += 1
-    if i < l1-1:
+    if i < l-1:
         return False
     return True
 
@@ -104,13 +104,7 @@ def symmetric(M):
     le, le0 = len(M), len(M[0])
     if le != le0:
         raise Exception("The dimensions are not correct")
-    
-    l = len(M)//2
-    l_e, i, checker = (len(M)-l), 0, True
 
-    while i < l and checker:
-        checker = _are_list_equals(M[i], M[l_e-i])
-        i += 1
-
-    if i < l-1:
+#def _are_list_equals(L1, L2):
+#def symmetric(M):
 
