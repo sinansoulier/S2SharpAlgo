@@ -1,3 +1,4 @@
+import classiques
 def getMax(L):
     if L:
         max = L[0]
@@ -90,15 +91,15 @@ def searchMatrix(M, e):
     return res
 
     
-"""# Exercice 2.4 (Symétrique)"""
+# Exercice 2.4 (Symétrique)
 # Ecrire la fonction qui teste si une matrice carrée non vide est symmétrique
-def _are_list_equals(L1, L2):
+""" def _are_list_equals(L1, L2):
     l, i = 0, len(L1)
-    while i < l and L1[i] == L2[i]:
+    while i < l and L1[i] == L2[i]:       TO BE RE-IMPLEMENTED
         i += 1
     if i < l-1:
         return False
-    return True
+    return True """
 
 def symmetric(M):
     le, le0 = len(M), len(M[0])
@@ -107,4 +108,87 @@ def symmetric(M):
 
 #def _are_list_equals(L1, L2):
 #def symmetric(M):
+
+
+
+def SumColumn(A,j):
+    n = len(A)
+    s = 0
+    for i in range(n):
+        s += A[i][j]
+    return s
+
+def SumDiags(A):
+    n = len(A)
+    (s1, s2) = (0, 0)
+    for i in range(n):
+        s2 += A[i][i]
+        s2 += A[i][n-i-2]
+    return (s1, s2)
+
+# Pers func
+def SumLine(L):
+    if L == []:
+        return 0
+    sum = 0
+    for i in L:
+        sum += i
+    return sum
+
+def magic_square(A):
+    n = len(A)
+    if n != len(A[0]):
+        raise Exception("Not a square matrix")
+    
+    (diag_1, diag_2) = SumDiags(A)
+    checker, i = (diag_1 == diag_2), 0
+
+    while i < n and checker:
+        checker = (diag_1 == SumLine(A[i]) and diag_1 == SumColumn(A, i))
+        i += 1
+    return checker
+
+def list_nsq(n):
+    l = []
+    for i in range(n*n):
+        l.append(False)
+        n -= 1
+    return l
+
+def is_normal(A):
+    i, j, n, checker = 0, 0, len(A), True
+    L, n2 = list_nsq(n), n*n
+    while i < n and checker:
+        j = 0
+        while j < n and checker: 
+            if A[i][j] <= 0 or A > n2 or L[A[i][j]]:
+                checker = False
+            else:
+                L[A[i][j]] = True
+            j += 1
+        j += 1
+    return checker
+
+def Siamise(n):
+    S = classiques.initmatrix(n, n, 0)
+    i = n - 1
+    j = n // 2
+    S[i][j] = 1
+
+    for val in range(2, n*n + 1):
+        # i, j ????
+        i2 = (i + 1) % n
+        j2 = (j + 1) % n
+        if S[i2][j2] != 0:
+            i -= 1
+            if i == 0:
+                i = n - 1
+        else:
+            (i, j) = (i2, j2)
+        
+        S[i][j] = val
+    return S
+
+
+#Harry Potter
 
