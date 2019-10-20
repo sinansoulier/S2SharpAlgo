@@ -5,7 +5,7 @@ __revision__ = '$Id: heap.py 2019-10-14'
 """
 Heap homework
 2019 - S2#
-@author: login
+@author: francois.soulier
 """
 
 #given function
@@ -30,8 +30,7 @@ def is_empty(H):
        :type H: list (hierachical rep. of bintree)
        :rtype: bool
     """
-    #FIXME
-    pass
+    return H == [None]
 
 def push(H, elt, val):
     """ adds the pair (val, elt) to heap H (in place: no need to return H)
@@ -43,8 +42,25 @@ def push(H, elt, val):
        :param val: The value associated to elt
        :type val: int or float
     """
-    #FIXME
-    pass
+    if not(is_empty(H)):
+        _tuple = (val, elt)
+        H.append(_tuple)
+        lengthH = len(H)
+        i = lengthH - 1
+        i_div2 = int(i/2)
+
+        while H[i_div2] and H[i][0] < H[i_div2][0]:
+            __swap(H, i, i_div2)
+            i = int(i/2)
+            i_div2 = int(i/2)
+    
+def __swap(H, i1, i2):
+    """
+    function that swaps two elements from a heap, given their indexes
+    """
+    swap = H[i1]
+    H[i1] = H[i2]
+    H[i2] = swap
     
 def pop(H):
     """ removes and returns the pair of smallest value in the heap H
@@ -53,8 +69,37 @@ def pop(H):
        :type H: list (hierachical rep. of bintree)
        :rtype: (num, any) (the removed pair)
     """
-    #FIXME
-    pass
+    if is_empty(H):
+        return None
+    
+    #get smallest pair and store it in a variable
+    small_pair = H[1]
+
+    #swap this value with the last element of the Heap
+    length_H = len(H)
+    __swap(H, 1, length_H - 1)
+
+    #pop the last value of the Heap, which is now the smallest value of the heap
+    H.pop()
+    
+    #'Downheap' until the element that is in the first position finds its 'rightful' place
+    if not(is_empty(H)):
+        i = 1
+        _2i = 2*i
+        length_H -= 1
+
+    while _2i < length_H and H[i][0] > H[_2i][0]:
+        if _2i + 1 < length_H and H[i][0] > H[_2i][0]:
+            __swap(H, i, _2i+1)
+            i = 2*i + 1
+            _2i = 2*i
+        else:
+            __swap(H, i, _2i+1)
+            i *= 2
+            _2i = 2*i
+
+    return small_pair
+
 
 #---------------------------------------------------------------
 def is_heap(T):
