@@ -23,3 +23,9 @@ print(francois_soulier_heap.pop(H2))
 H10 = H2
 print(H10)
 print(H10 == H3)
+
+Hp = [None]
+francois_soulier_heap.push(Hp, 'C', 12)
+francois_soulier_heap.push(Hp, 'B', 10)
+
+print(Hp)

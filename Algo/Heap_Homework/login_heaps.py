@@ -42,16 +42,17 @@ def push(H, elt, val):
        :param val: The value associated to elt
        :type val: int or float
     """
-    _tuple = (val, elt)
-    H.append(_tuple)
-    lengthH = len(H)
-    i = lengthH - 1
-    i_div2 = i//2
+    if not(is_empty(H)):
+        _tuple = (val, elt)
+        H.append(_tuple)
+        lengthH = len(H)
+        i = lengthH - 1
+        i_div2 = int(i/2)
 
-    while H[i_div2] and H[i][0] < H[i_div2][0] and i > 0:
-        __swap(H, i, i_div2)
-        i = i//2
-        i_div2 = i//2
+        while H[i_div2] and H[i][0] < H[i_div2][0]:
+            __swap(H, i, i_div2)
+            i = int(i/2)
+            i_div2 = int(i/2)
     
 def __swap(H, i1, i2):
     """
@@ -69,7 +70,7 @@ def pop(H):
        :rtype: (num, any) (the removed pair)
     """
     if is_empty(H):
-        raise Exception("The heap is empty")
+        return None
     
     #get smallest pair and store it in a variable
     small_pair = H[1]
@@ -93,7 +94,7 @@ def pop(H):
             i = 2*i + 1
             _2i = 2*i
         else:
-            __swap(H, i, _2i)
+            __swap(H, i, _2i+1)
             i *= 2
             _2i = 2*i
 
