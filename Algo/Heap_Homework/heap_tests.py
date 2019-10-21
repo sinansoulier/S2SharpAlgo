@@ -19,13 +19,20 @@ francois_soulier_heap = SourceFileLoader('francois_soulier_heap', myfile).load_m
 #print(H4)
 #print (H4 == H2)
 
-print(francois_soulier_heap.pop(H2))
-H10 = H2
-print(H10)
-print(H10 == H3)
+#print(francois_soulier_heap.pop(H2))
+#H10 = H2
+#print(H10)
+#print(H10 == H3)
 
-Hp = [None]
-francois_soulier_heap.push(Hp, 'C', 12)
-francois_soulier_heap.push(Hp, 'B', 10)
+HP = [None]
 
-print(Hp)
+def push_elements(h):
+    for i in h:
+        francois_soulier_heap.push(h, i[1], i[0])
+
+def pop_elements(h):
+    for i in h:
+        print(francois_soulier_heap.pop(h))
+
+push_elements(HP)
+print(HP)
