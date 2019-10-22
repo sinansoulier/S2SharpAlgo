@@ -53,14 +53,7 @@ def push(H, elt, val):
         i = i//2
         i_div2 = i//2
     
-def __swap(H, i1, i2):
-    """
-    function that swaps two elements from a heap, given their indexes
-    """
-    swap = H[i1]
-    H[i1] = H[i2]
-    H[i2] = swap
-    
+
 def pop(H):
     """ removes and returns the pair of smallest value in the heap H
     
@@ -72,7 +65,7 @@ def pop(H):
         raise Exception("The heap is empty")
     
     #get smallest pair and store it in a variable
-    small_pair = H[1]
+    small_pair = H[__getpos_min_heap(H)]
 
     #swap this value with the last element of the Heap
     length_H = len(H)
@@ -87,18 +80,53 @@ def pop(H):
         _2i = 2*i
         length_H -= 1
 
-    while _2i < length_H and H[i][0] > H[_2i][0]:
-        if _2i + 1 < length_H and H[i][0] > H[_2i][0]:
-            __swap(H, i, _2i+1)
-            i = 2*i + 1
-            _2i = 2*i
-        else:
-            __swap(H, i, _2i)
-            i *= 2
-            _2i = 2*i
+        while _2i < length_H and H[i][0] > H[_2i][0]:
+            if _2i + 1 < length_H and H[i][0] > H[_2i][0]:
+                __swap(H, i, _2i+1)
+                i = 2*i + 1
+                _2i = 2*i
+            else:
+                __swap(H, i, _2i)
+                i *= 2
+                _2i = 2*i
+        
+        j = __getpos_min_heap(H)
+        if j != 1:
+            __reorder(H, 1, j)
 
     return small_pair
 
+def __swap(H, i1, i2):
+    """
+    function that swaps two elements from a heap, given their indexes
+    """
+    swap = H[i1]
+    H[i1] = H[i2]
+    H[i2] = swap
+
+def __getpos_min_heap(H):
+    """
+    function that returns the position of the minimum 'val' of the 
+    empty heap
+    """
+    if is_empty(H):
+        raise Exception("Trying to get minimum value of an empty heap")
+    min_pos = 1
+    for i in range (1, len(H)):
+        if H[i][0] < H[min_pos][0]:
+            min_pos = i
+    return min_pos
+
+def __reorder(H, i1, i2):
+    """
+    function that fixes the heap, in case its order relation is 'broken' 
+    """
+    __swap(H, i1, i2)
+    i2_div_2 = i2 // 2
+    while i2_div_2 > 0 and H[i2][0] < H[i2_div_2][0]:
+        __swap(H, i2, i2_div_2)
+        i2 = i2 // 2
+        i2_div_2 = i2 // 2
 
 #---------------------------------------------------------------
 def is_heap(T):
@@ -108,8 +136,25 @@ def is_heap(T):
        :type T: list (hierachical rep. of bintree)
        :rtype: bool
     """
-    #FIXME
-    pass
+    if not(T):
+        return False
+    checker = T[0] == None
+    if is_empty(T):
+        return True
+
+    i = 1
+    _2i = 2*i
+    _2i_1 = _2i + 1
+    length_T = len(T)
+    while checker and _2i < length_T:
+        if _2i_1 < length_T:
+            checker = T[_2i] > T[i] and T[_2i_1] > T[i]
+        else:
+            checker = T[_2i] > T[i]
+        i += 1
+        _2i = 2*i
+        _2i_1 = _2i + 1
+    return checker
     
 def heap_sort(L):
     """ sorts the associative list L in increasing order according to values 
@@ -117,5 +162,18 @@ def heap_sort(L):
         :param L: a list containing pairs (element, value)
         :rtype: (any, num) list (the new list sorted)
     """
-    #FIXME
-    pass
+    if not(L):
+        return []
+    
+    L_r = L
+    l = len(L)
+    if l == 1:
+        return L
+    
+    for i in range (l):
+        for j in range (i+1, l):
+            if L_r[i][1] > L_r[j][1]:
+                __swap(L_r, i, j)
+
+    return L_r
+    

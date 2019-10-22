@@ -26,13 +26,53 @@ francois_soulier_heap = SourceFileLoader('francois_soulier_heap', myfile).load_m
 
 HP = [None]
 
-def push_elements(h):
-    for i in h:
-        francois_soulier_heap.push(h, i[1], i[0])
+def push_elements(Hp, L):
+    for i in L:
+        francois_soulier_heap.push(Hp, i[1], i[0])
+    return Hp
 
 def pop_elements(h):
-    for i in h:
+    while not(francois_soulier_heap.is_empty(h)):
         print(francois_soulier_heap.pop(h))
+        print(h)
 
-push_elements(HP)
-print(HP)
+#print(HP)
+#push_elements(HP, h3)
+#pop_elements(HP)
+
+L = [('A', 20), ('B', 5), ('C', 10), ('D', 12), ('E', 15), ('F', 8), ('G', 2), ('H', 6), ('I', 2), ('J', 9)]
+#print(francois_soulier_heap.heap_sort(L))
+
+T = [None, 2, 12, 10, 24, 16, 14, 18, 30, 26, 20, 32, 28, 22]
+T1 = [None, 12, 2, 24, 19]
+
+#print(francois_soulier_heap.is_heap(T), francois_soulier_heap.is_heap(T1))
+
+def gen_list_val(H):
+    L = [None]
+    i, l = 1, len(H)
+
+    while i < l:
+        L.append(H[i][0])
+        i += 1
+    return L
+
+print("TEST OF THE FUNCTION IS_HEAP\n")
+B1 = gen_list_val(H1)
+B2 = gen_list_val(H2)
+B3 = gen_list_val(H3)
+
+h_1 = push_elements([None], h1)
+h_2 = push_elements([None], h2)
+h_3 = push_elements([None], h3)
+
+b1 = gen_list_val(h_1)
+b2 = gen_list_val(h_2)
+b3 = gen_list_val(h_3)
+
+print(B1, ':', francois_soulier_heap.is_heap(B1),'\n')
+print(B2, ':', francois_soulier_heap.is_heap(B2),'\n')
+print(B3, ':', francois_soulier_heap.is_heap(B3),'\n')
+print(b1, ':', francois_soulier_heap.is_heap(b1),'\n')
+print(b2, ':', francois_soulier_heap.is_heap(b2),'\n')
+print(b3, ':', francois_soulier_heap.is_heap(b3),'\n')
