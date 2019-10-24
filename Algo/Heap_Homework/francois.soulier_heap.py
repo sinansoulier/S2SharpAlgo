@@ -48,10 +48,10 @@ def push(H, elt, val):
     i = lengthH - 1
     i_div2 = i//2
 
-    while H[i_div2] and H[i][0] < H[i_div2][0] and i > 0:
-        __swap(H, i, i_div2)
-        i = i//2
-        i_div2 = i//2
+    while H[i_div2] != None and i > 0 and H[i][0] < H[i_div2][0]:
+            __swap(H, i, i_div2)
+            i = i//2
+            i_div2 = i//2
     
 
 def pop(H):
@@ -90,9 +90,9 @@ def pop(H):
                 i *= 2
                 _2i = 2*i
         
-        j = __getpos_min_heap(H)
+        """j = __getpos_min_heap(H)
         if j != 1:
-            __reorder(H, 1, j)
+            __reorder(H, 1, j)"""
 
     return small_pair
 
@@ -148,9 +148,9 @@ def is_heap(T):
     length_T = len(T)
     while checker and _2i < length_T:
         if _2i_1 < length_T:
-            checker = T[_2i] > T[i] and T[_2i_1] > T[i]
+            checker = T[_2i][1] > T[i][1] and T[_2i_1][1] > T[i][1]
         else:
-            checker = T[_2i] > T[i]
+            checker = T[_2i][1] > T[i][1]
         i += 1
         _2i = 2*i
         _2i_1 = _2i + 1

@@ -6,73 +6,56 @@ h3 = [(34, 'val_34'), (81, 'val_81'), (59, 'val_59'), (56, 'val_56'), (79, 'val_
 H1 = [None, (2, 'A'), (12, 'C'), (10, 'B'), (24, 'I'), (16, 'E'), (14, 'D'), (18, 'F'), (30, 'L'), (26, 'J'), (20, 'G'), (32, 'M'), (28, 'K'), (22, 'H')]
 H2 = [None, (2, 'A'), (12, 'C'), (5, 'N'), (24, 'I'), (16, 'E'), (14, 'D'), (10, 'B'), (30, 'L'), (26, 'J'), (20, 'G'), (32, 'M'), (28, 'K'), (22, 'H'), (18, 'F')]
 H3 = [None, (5, 'N'), (12, 'C'), (10, 'B'), (24, 'I'), (16, 'E'), (14, 'D'), (18, 'F'), (30, 'L'), (26, 'J'), (20, 'G'), (32, 'M'), (28, 'K'), (22, 'H')]
+L = [('A', 20), ('B', 5), ('C', 10), ('D', 12), ('E', 15), ('F', 8), ('G', 2), ('H', 6), ('I', 2), ('J', 9)]
 
+T = [None, 2, 12, 10, 24, 16, 14, 18, 30, 26, 20, 32, 28, 22]
+T1 = [None, 12, 2, 24, 19]
+
+n = [None, (25, 'val_25'), (28, 'val_28'), (36, 'val_36'), (30, 'val_30'), (31, 'val_31'), (35, 'val_35'), (38, 'val_38'), (43, 'val_43'), (33, 'val_33'), (34, 'val_34'), (45, 'val_45'), (42, 'val_42'), (37, 'val_37'), (27, 'val_27'), (40, 'val_40'), (44, 'val_44'), (32, 'val_32'), (46, 'val_46'), (49, 'val_49'), (29, 'val_29'), (39, 'val_39'), (48, 'val_48'), (41, 'val_41'), (47, 'val_47'), (26, 'val_26')]
+
+heap_s = [('G', 2), ('I', 2), ('B', 5), ('H', 6), ('F', 8), ('J', 9), ('C', 10), ('D', 12), ('E', 15), ('A', 20)]
 from importlib.machinery import SourceFileLoader
 myfile = "/Users/francoissoulier/Desktop/S2SharpAlgo/Algo/Heap_Homework/francois.soulier_heap.py"
 francois_soulier_heap = SourceFileLoader('francois_soulier_heap', myfile).load_module()
-
-#print(francois_soulier_heap.is_empty([None]))
-
-#print(H1)
-#H4 = H1
-#francois_soulier_heap.push(H4, 'N', 5)
-#print(H4)
-#print (H4 == H2)
-
-#print(francois_soulier_heap.pop(H2))
-#H10 = H2
-#print(H10)
-#print(H10 == H3)
 
 HP = [None]
 
 def push_elements(Hp, L):
     for i in L:
         francois_soulier_heap.push(Hp, i[1], i[0])
-    return Hp
+        #print(Hp, '\n')
 
 def pop_elements(h):
     while not(francois_soulier_heap.is_empty(h)):
         print(francois_soulier_heap.pop(h))
         print(h)
+def pop_range(h, n):
+    for i in range(n+1):
+        francois_soulier_heap.pop(h)
+    #print(h, '\n')
 
-#print(HP)
-#push_elements(HP, h3)
-#pop_elements(HP)
+#push_elements(HP, h1)
+#print(francois_soulier_heap.is_heap(HP))
 
-L = [('A', 20), ('B', 5), ('C', 10), ('D', 12), ('E', 15), ('F', 8), ('G', 2), ('H', 6), ('I', 2), ('J', 9)]
-#print(francois_soulier_heap.heap_sort(L))
+class RandomClass:
+    n
+    def __init__(self, N):
+        n = N
 
-T = [None, 2, 12, 10, 24, 16, 14, 18, 30, 26, 20, 32, 28, 22]
-T1 = [None, 12, 2, 24, 19]
-
-#print(francois_soulier_heap.is_heap(T), francois_soulier_heap.is_heap(T1))
-
-def gen_list_val(H):
-    L = [None]
-    i, l = 1, len(H)
-
-    while i < l:
-        L.append(H[i][0])
-        i += 1
+def reverse_tup(L):
+    for i in range(1, len(L)):
+        L[i] = (L[i][1], L[i][0])
     return L
 
-print("TEST OF THE FUNCTION IS_HEAP\n")
-B1 = gen_list_val(H1)
-B2 = gen_list_val(H2)
-B3 = gen_list_val(H3)
+def gen_list(n):
+    L = []
+    for i in range(n):
+        L.append((i, RandomClass(i)))
+    return L
 
-h_1 = push_elements([None], h1)
-h_2 = push_elements([None], h2)
-h_3 = push_elements([None], h3)
-
-b1 = gen_list_val(h_1)
-b2 = gen_list_val(h_2)
-b3 = gen_list_val(h_3)
-
-print(B1, ':', francois_soulier_heap.is_heap(B1),'\n')
-print(B2, ':', francois_soulier_heap.is_heap(B2),'\n')
-print(B3, ':', francois_soulier_heap.is_heap(B3),'\n')
-print(b1, ':', francois_soulier_heap.is_heap(b1),'\n')
-print(b2, ':', francois_soulier_heap.is_heap(b2),'\n')
-print(b3, ':', francois_soulier_heap.is_heap(b3),'\n')
+LIST = gen_list(10)
+push_elements(HP, LIST)
+#print(HP)
+HP = reverse_tup(HP)
+#print(HP)
+print(francois_soulier_heap.is_heap(HP))
