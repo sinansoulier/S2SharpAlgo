@@ -64,65 +64,37 @@ def pop(H):
     if is_empty(H):
         raise Exception("The heap is empty")
     
-    #get smallest pair and store it in a variable
-    small_pair = H[1]
-
-    #swap this value with the last element of the Heap
-    length_H = len(H)
-    __swap(H, 1, length_H - 1)
-
-    #pop the last value of the Heap, which is now the smallest value of the heap
-    H.pop()
     
-    #'Downheap' until the element that is in the first position finds its 'rightful' place
+    small_pair = H[1]
+    length_H = len(H)-1
+    __swap(H, 1, length_H)
+    H.pop()
+
     if not(is_empty(H)):
         i = 1
-        _2i = 2*i
-        length_H -= 1
+        while i <= length_H//2:
+            _left_pos = 2*i
+            _right_pos = _left_pos + 1
+            
+            if _right_pos < length_H and H[_right_pos][0] < H[i][0] and H[_right_pos][0] < H[_left_pos][0]:
+                __swap(H, i, _right_pos)
+                i = _right_pos
+            elif _left_pos < length_H and H[_left_pos][0] < H[i][0]:
+                __swap(H, i, _left_pos)
+                i = _left_pos
+            else:
+                i = _left_pos
 
-    __reorder(H, length_H)
     return small_pair
 
 def __swap(H, i1, i2):
     """
-    function that swaps two elements from a heap, given their indexes
+    function that swaps two elements from a heap (or a list), given their indexes
     """
     swap = H[i1]
     H[i1] = H[i2]
     H[i2] = swap
 
-"""def __reorder(H, length_H):
-    
-    #function that fixes the heap, in case its order relation is 'broken' 
-    
-    for i in range (1, length_H//2+1):
-            _left_pos = 2*i
-            _right_pos = _left_pos + 1
-
-            if _left_pos < length_H:
-                if _right_pos < length_H and H[_right_pos][0] < H[i][0] and H[_right_pos][0] < H[_left_pos][0]:
-                    __swap(H, i, _right_pos)
-                elif H[_left_pos][0] < H[i][0]:
-                    __swap(H, i, _left_pos)"""
-    
-def __reorder(H, length_H):
-    """
-    function that fixes the heap, in case its order relation is 'broken' 
-    """
-    i = 1
-    while i < length_H//2:
-            _left_pos = 2*i
-            _right_pos = _left_pos + 1
-
-            if _left_pos < length_H:
-                if _right_pos < length_H and H[_right_pos][0] < H[i][0] and H[_right_pos][0] < H[_left_pos][0]:
-                    __swap(H, i, _right_pos)
-                    i = _right_pos
-                elif H[_left_pos][0] < H[i][0]:
-                    __swap(H, i, _left_pos)
-                    i = _left_pos
-                else:
-                    i = _left_pos
 
 #---------------------------------------------------------------
 def is_heap(T):
@@ -140,12 +112,15 @@ def is_heap(T):
 
     i = 1
     length_T = len(T)
-    while checker and i < length_T//2+1:
+    while checker and i <= length_T//2:
             _left_pos = 2*i
             _right_pos = _left_pos + 1
 
-            if _left_pos < length_T:
-                checker = _right_pos < length_T and T[_right_pos][1] > T[i][1] or T[_left_pos][1] > T[i][1]
+            if _right_pos < length_T:
+                checker =T[_right_pos][0] > T[i][0] and T[_left_pos][0] > T[i][0]
+                
+            elif _left_pos < length_T:
+                checker = T[_left_pos][0] > T[i][0]
             i += 1
     return checker
     
@@ -155,9 +130,6 @@ def heap_sort(L):
         :param L: a list containing pairs (element, value)
         :rtype: (any, num) list (the new list sorted)
     """
-    return __sort_heap(L)
-
-def __sort_heap(L):
     H = Heap()
     for i in L:
         push(H, i[0], i[1])
