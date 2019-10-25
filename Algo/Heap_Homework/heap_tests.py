@@ -14,28 +14,43 @@ T1 = [None, 12, 2, 24, 19]
 n = [None, (25, 'val_25'), (28, 'val_28'), (36, 'val_36'), (30, 'val_30'), (31, 'val_31'), (35, 'val_35'), (38, 'val_38'), (43, 'val_43'), (33, 'val_33'), (34, 'val_34'), (45, 'val_45'), (42, 'val_42'), (37, 'val_37'), (27, 'val_27'), (40, 'val_40'), (44, 'val_44'), (32, 'val_32'), (46, 'val_46'), (49, 'val_49'), (29, 'val_29'), (39, 'val_39'), (48, 'val_48'), (41, 'val_41'), (47, 'val_47'), (26, 'val_26')]
 
 heap_s = [('G', 2), ('I', 2), ('B', 5), ('H', 6), ('F', 8), ('J', 9), ('C', 10), ('D', 12), ('E', 15), ('A', 20)]
+heap_s2 = [('I', 2), ('G', 2), ('B', 5), ('H', 6), ('F', 8), ('J', 9), ('C', 10), ('D', 12), ('E', 15), ('A', 20)]
 from importlib.machinery import SourceFileLoader
 myfile = "/Users/francoissoulier/Desktop/S2SharpAlgo/Algo/Heap_Homework/francois.soulier_heap.py"
 francois_soulier_heap = SourceFileLoader('francois_soulier_heap', myfile).load_module()
 
 HP = [None]
 
-def push_elements(Hp, L):
-    for i in L:
-        francois_soulier_heap.push(Hp, i[1], i[0])
-        #print(Hp, '\n')
-
-def pop_elements(h):
-    while not(francois_soulier_heap.is_empty(h)):
-        print(francois_soulier_heap.pop(h))
-        print(h)
 def pop_range(h, n):
     for i in range(n+1):
         francois_soulier_heap.pop(h)
-    #print(h, '\n')
+        r = get_reversed_list(h)
+        print(h,'\n', francois_soulier_heap.is_heap(r),'\n')
 
-#push_elements(HP, h1)
-#print(francois_soulier_heap.is_heap(HP))
+def push_elements(h, L):
+    if L[0]:
+        for i in L:
+            francois_soulier_heap.push(h, i[1], i[0])
+    else:
+        for i in range(1, len(L)):
+            francois_soulier_heap.push(h, L[i][1], L[i][0])
+
+def get_reversed_list(H):
+    L_r = [None]
+    for i in range(1, len(H)):
+        L_r.append((H[i][1], H[i][0]))
+    return L_r
+
+
+"""push_elements(HP, h3)
+print(HP)
+k = get_reversed_list(HP)
+print(francois_soulier_heap.is_heap(k))
+pop_range(HP, 99)
+print(HP)
+k = get_reversed_list(HP)
+print(francois_soulier_heap.is_heap(k),'\n')"""
+
 
 class RandomClass:
     n
@@ -43,7 +58,7 @@ class RandomClass:
         n = N
 
 def reverse_tup(L):
-    for i in range(1, len(L)):
+    for i in range(0, len(L)):
         L[i] = (L[i][1], L[i][0])
     return L
 
@@ -53,9 +68,13 @@ def gen_list(n):
         L.append((i, RandomClass(i)))
     return L
 
-LIST = gen_list(10)
+"""LIST = gen_list(10)
 push_elements(HP, LIST)
 #print(HP)
 HP = reverse_tup(HP)
 #print(HP)
-print(francois_soulier_heap.is_heap(HP))
+print(francois_soulier_heap.is_heap(HP))"""
+
+L1 = francois_soulier_heap.heap_sort(L)
+L2 = francois_soulier_heap.heap_sort(reverse_tup(h2))
+print(L1,'\n','\n',L1 == heap_s or L1 == heap_s2)

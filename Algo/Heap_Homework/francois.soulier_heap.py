@@ -65,7 +65,7 @@ def pop(H):
         raise Exception("The heap is empty")
     
     #get smallest pair and store it in a variable
-    small_pair = H[__getpos_min_heap(H)]
+    small_pair = H[1]
 
     #swap this value with the last element of the Heap
     length_H = len(H)
@@ -80,20 +80,7 @@ def pop(H):
         _2i = 2*i
         length_H -= 1
 
-        while _2i < length_H and H[i][0] > H[_2i][0]:
-            if _2i + 1 < length_H and H[i][0] > H[_2i][0]:
-                __swap(H, i, _2i+1)
-                i = 2*i + 1
-                _2i = 2*i
-            else:
-                __swap(H, i, _2i)
-                i *= 2
-                _2i = 2*i
-        
-        """j = __getpos_min_heap(H)
-        if j != 1:
-            __reorder(H, 1, j)"""
-
+    __reorder(H, length_H)
     return small_pair
 
 def __swap(H, i1, i2):
@@ -104,29 +91,38 @@ def __swap(H, i1, i2):
     H[i1] = H[i2]
     H[i2] = swap
 
-def __getpos_min_heap(H):
-    """
-    function that returns the position of the minimum 'val' of the 
-    empty heap
-    """
-    if is_empty(H):
-        raise Exception("Trying to get minimum value of an empty heap")
-    min_pos = 1
-    for i in range (1, len(H)):
-        if H[i][0] < H[min_pos][0]:
-            min_pos = i
-    return min_pos
+"""def __reorder(H, length_H):
+    
+    #function that fixes the heap, in case its order relation is 'broken' 
+    
+    for i in range (1, length_H//2+1):
+            _left_pos = 2*i
+            _right_pos = _left_pos + 1
 
-def __reorder(H, i1, i2):
+            if _left_pos < length_H:
+                if _right_pos < length_H and H[_right_pos][0] < H[i][0] and H[_right_pos][0] < H[_left_pos][0]:
+                    __swap(H, i, _right_pos)
+                elif H[_left_pos][0] < H[i][0]:
+                    __swap(H, i, _left_pos)"""
+    
+def __reorder(H, length_H):
     """
     function that fixes the heap, in case its order relation is 'broken' 
     """
-    __swap(H, i1, i2)
-    i2_div_2 = i2 // 2
-    while i2_div_2 > 0 and H[i2][0] < H[i2_div_2][0]:
-        __swap(H, i2, i2_div_2)
-        i2 = i2 // 2
-        i2_div_2 = i2 // 2
+    i = 1
+    while i < length_H//2:
+            _left_pos = 2*i
+            _right_pos = _left_pos + 1
+
+            if _left_pos < length_H:
+                if _right_pos < length_H and H[_right_pos][0] < H[i][0] and H[_right_pos][0] < H[_left_pos][0]:
+                    __swap(H, i, _right_pos)
+                    i = _right_pos
+                elif H[_left_pos][0] < H[i][0]:
+                    __swap(H, i, _left_pos)
+                    i = _left_pos
+                else:
+                    i = _left_pos
 
 #---------------------------------------------------------------
 def is_heap(T):
@@ -143,17 +139,14 @@ def is_heap(T):
         return True
 
     i = 1
-    _2i = 2*i
-    _2i_1 = _2i + 1
     length_T = len(T)
-    while checker and _2i < length_T:
-        if _2i_1 < length_T:
-            checker = T[_2i][1] > T[i][1] and T[_2i_1][1] > T[i][1]
-        else:
-            checker = T[_2i][1] > T[i][1]
-        i += 1
-        _2i = 2*i
-        _2i_1 = _2i + 1
+    while checker and i < length_T//2+1:
+            _left_pos = 2*i
+            _right_pos = _left_pos + 1
+
+            if _left_pos < length_T:
+                checker = _right_pos < length_T and T[_right_pos][1] > T[i][1] or T[_left_pos][1] > T[i][1]
+            i += 1
     return checker
     
 def heap_sort(L):
@@ -162,18 +155,14 @@ def heap_sort(L):
         :param L: a list containing pairs (element, value)
         :rtype: (any, num) list (the new list sorted)
     """
-    if not(L):
-        return []
-    
-    L_r = L
-    l = len(L)
-    if l == 1:
-        return L
-    
-    for i in range (l):
-        for j in range (i+1, l):
-            if L_r[i][1] > L_r[j][1]:
-                __swap(L_r, i, j)
+    return __sort_heap(L)
 
-    return L_r
-    
+def __sort_heap(L):
+    H = Heap()
+    for i in L:
+        push(H, i[0], i[1])
+    L_r = []
+    for i in range(1, len(H)):
+        tup = pop(H)
+        L_r.append((tup[1], tup[0]))
+    return L_r 
