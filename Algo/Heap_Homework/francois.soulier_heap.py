@@ -117,7 +117,7 @@ def is_heap(T):
             _right_pos = _left_pos + 1
 
             if _right_pos < length_T:
-                checker =T[_right_pos][0] > T[i][0] and T[_left_pos][0] > T[i][0]
+                checker = T[_right_pos][0] > T[i][0] and T[_left_pos][0] > T[i][0]
                 
             elif _left_pos < length_T:
                 checker = T[_left_pos][0] > T[i][0]

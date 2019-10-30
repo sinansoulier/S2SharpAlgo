@@ -16,7 +16,7 @@ n = [None, (25, 'val_25'), (28, 'val_28'), (36, 'val_36'), (30, 'val_30'), (31, 
 heap_s = [('G', 2), ('I', 2), ('B', 5), ('H', 6), ('F', 8), ('J', 9), ('C', 10), ('D', 12), ('E', 15), ('A', 20)]
 heap_s2 = [('I', 2), ('G', 2), ('B', 5), ('H', 6), ('F', 8), ('J', 9), ('C', 10), ('D', 12), ('E', 15), ('A', 20)]
 from importlib.machinery import SourceFileLoader
-myfile = "/home/francois/Desktop/S2SharpAlgo/Algo/Heap_Homework/francois.soulier_heap.py"
+myfile = "/Users/francoissoulier/Desktop/S2SharpAlgo/Algo/Heap_Homework/francois.soulier_heap.py"
 francois_soulier_heap = SourceFileLoader('francois_soulier_heap', myfile).load_module()
 
 HP = [None]
@@ -46,10 +46,10 @@ def get_reversed_list(H):
     return L_r
 
 
-push_elements(HP, h1)
+"""push_elements(HP, h1)
 print(HP,'\n')
 print(francois_soulier_heap.is_heap(HP))
-pop_range(HP, len(HP)-2)
+pop_range(HP, len(HP)-2)"""
 
 
 class RandomClass:
@@ -68,3 +68,8 @@ def gen_list(n):
         L.append((i, RandomClass(i)))
     return L
 
+def testfunc():
+    g = francois_soulier_heap.heap_sort(h1)
+    print(g)
+
+testfunc()
