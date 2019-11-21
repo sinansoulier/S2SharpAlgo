@@ -3,6 +3,8 @@ from importlib.machinery import SourceFileLoader
 myfile = "/Users/francoissoulier/Desktop/AlgoTools/binary trees/bintrees_measures_2019-10.py"
 measures = SourceFileLoader('measures', myfile).load_module()
 
+#-------------------------------------------------------------------------------------------------
+
 def __searchOcc(B, c, occ=""):
     if B.left == B.right:
         if B.key == c:
@@ -15,6 +17,7 @@ def __searchOcc(B, c, occ=""):
             res = __searchOcc(B.right, c, occ+'1')
         return res
 
+#-------------------------------------------------------------------------------------------------
 
 # T = [None]*(2**n), avec n la taille
 # Creation of list using hierarchical representation
@@ -65,3 +68,17 @@ def __create_list2(B, T, hier=1):
 
 def object_to_list2(B):
     return __create_list2(B, [None])
+
+#-------------------------------------------------------------------------------------------------
+
+def __create_tree(T, l, B=None, hier=1):
+    if hier < l:
+        B.key = T[hier]
+        return __create_tree(T, l, B.left, 2*hier) + __create_tree(T, l, B.right, 2*hier+1)
+    return B
+
+def list_to_object(T):
+    if not(T):
+        return None
+        
+    return __create_tree(T, len(T))
