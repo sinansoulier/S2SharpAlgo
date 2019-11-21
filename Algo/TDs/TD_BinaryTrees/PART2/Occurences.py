@@ -80,5 +80,4 @@ def __create_tree(T, l, B=None, hier=1):
 def list_to_object(T):
     if not(T):
         return None
-        
     return __create_tree(T, len(T))
