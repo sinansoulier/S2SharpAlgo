@@ -24,5 +24,5 @@ B_2 = bintree.BinTree(1,
                 bintree.BinTree(6,None,None), 
                 bintree.BinTree(7, bintree.BinTree(14,None,bintree.BinTree(29,None,None)),None)))
 
-print(Test_Equal.test_equal(B_1, B_2), '\n')
-print(Test_Equal.test_equal(B_1, B_3))
+#print(Test_Equal.test_equal(B_1, B_2), '\n')
+#print(Test_Equal.test_equal(B_1, B_3))

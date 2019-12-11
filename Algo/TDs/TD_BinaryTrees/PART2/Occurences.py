@@ -71,13 +71,37 @@ def object_to_list2(B):
 
 #-------------------------------------------------------------------------------------------------
 
-def __create_tree(T, l, B=None, hier=1):
-    if hier < l:
-        B.key = T[hier]
-        return __create_tree(T, l, B.left, 2*hier) + __create_tree(T, l, B.right, 2*hier+1)
-    return B
-
-def list_to_object(T):
-    if not(T):
+def list_to_object(T, i=1):
+    if i >= len(T) or not(T[i]):
         return None
-    return __create_tree(T, len(T))
+    else:
+        B = bintree.BinTree(T[i], None, None)
+        B.left = list_to_object(T, 2*i)
+        B.right = list_to_object(T, 2*i+1)
+        return B
+
+#-------------------------------------------------------------------------------------------------
+
+class BinTreeSize:
+    def __init__(self, key, left, right, size):
+        self.key = key
+        self.left = left
+        self.right = right
+        self.size = size
+
+def __sized_tree(B, B_sized):
+    if not(B):
+        return (None, 0)
+    else:
+        C = BinTreeSize(B.key, None, None, 1)
+        (C.left, s_left) = __sized_tree(B.left)
+        (C.right, s_right) = __sized_tree(B.right)
+        C.size += s_left + s_right
+        return (C, C.size)
+
+def sized_tree(B):
+    (C, _) = __sized_tree(B)
+    return C
+
+def load_tree(filename):
+    f = open(filename)
